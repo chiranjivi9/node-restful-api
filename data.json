@@ -1,6 +1,9 @@
 {
   "models": [
     {
+
+    },
+    {
       "id": 1,
       "name": "Toyota"
     },
@@ -10,6 +13,9 @@
     }
   ],
   "cars": [
+    {
+
+    },
     {
       "id": 1,
       "name": "Corolla",
