@@ -28,9 +28,9 @@ router.get('/cars', (req, res, next)=>{
 router.get('/car/:id',(req, res, next)=>{
   // grab data for a specific id or the array index for the cars data
 if(req.params.id < data.cars.length)
-{  const car = data.cars[req.params.id]
-  res.status(200).json(car)}
-    // const carid = data.cars
+  {const car = data.cars[req.params.id]
+    res.status(200).json(car)}
+      // const carid = data.cars
 else {
     res.status(404).json({
       success: false,

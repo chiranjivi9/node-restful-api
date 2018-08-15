@@ -1,0 +1,189 @@
+{
+  "users": [
+    {
+
+    },
+
+    {
+      "id": 1,
+      "user": "abc",
+      "email": "abc@gmail.com",
+      "investments":{
+                "investment": 1,
+                "user": "abc",
+                "email": "abc@gmail.com"
+              }
+    },
+    {
+      "id": 2,
+      "user": "def",
+      "email":"def@gmail.com",
+      "investments":{
+                  "investment": 2,
+                  "user":  "def",
+                  "email":"def@gmail.com"
+                }
+    },
+    {
+      "id": 3,
+      "user": "ghi",
+      "email":"ghi@gmail.com",
+      "investments":{
+                  "investment": 3,
+                  "user":  "ghi",
+                  "email":"ghi@gmail.com"
+                }
+    },
+    {
+      "id": 4,
+      "user": "jkl",
+      "email":"jkl@gmail.com",
+      "investments":{
+                "investment": 4,
+                "user":   "jkl",
+                "email":"jkl@gmail.com"
+              }
+    },
+    {
+      "id": 5,
+      "user": "mno",
+      "email":"mno@gmail.com",
+      "investments":{
+                "investment": 5,
+                "user": "mno",
+                "email":"mno@gmail.com"
+              }
+    },
+    {
+      "id": 6,
+      "user": "pqr",
+      "email":"pqr@gmail.com",
+      "investments":{
+                "investment": 6,
+                "user": "pqr",
+                "email":"pqr@gmail.com"
+              }
+    },
+    {
+      "id": 7,
+      "user": "stu",
+      "email":"stu@gmail.com",
+      "investments":{
+                "investment": 7,
+                "user":"stu",
+                "email":"stu@gmail.com"
+              }
+    },
+    {
+      "id": 8,
+      "user": "vwx",
+      "email":"vwx@gmail.com",
+      "investments":{
+                "investment": 8,
+                "user":"vwx" ,
+                "email":"vwx@gmail.com"
+              }
+    },
+    {
+      "id": 9,
+      "user": "yza",
+      "email":"yza@gmail.com",
+      "investments":{
+                  "investment": 9,
+                  "user":"yza",
+                  "email":"yza@gmail.com"
+
+                }
+    },
+    {
+      "id": 10,
+      "user": "123abc",
+      "email":"123abc@gmail.com",
+      "investments":{
+                "investment": 10,
+                "user": "123abc",
+                "email":"123abc@gmail.com"
+              }
+      },
+    {
+      "id": 11,
+      "user": "456def",
+      "email":"456def@gmail.com",
+      "investments":{
+                "investment": 11,
+                "user": "456def",
+                "email":"456def@gmail.com"
+
+              }
+    }
+
+  ],
+
+  "investments": [
+    {
+
+    },
+    {
+      "investment": 1,
+      "user": "abc",
+      "email": "abc@gmail.com"
+
+    },
+    {
+      "investment": 2,
+      "user":  "def",
+      "email":"def@gmail.com"
+
+    },
+    {
+      "investment": 3,
+      "user":  "ghi",
+      "email":"ghi@gmail.com"
+    },
+    {
+      "investment": 4,
+      "user":   "jkl",
+      "email":"jkl@gmail.com"
+    },
+    {
+      "investment": 5,
+      "user": "mno",
+      "email":"mno@gmail.com"
+    },
+    {
+      "investment": 6,
+      "user": "pqr",
+      "email":"pqr@gmail.com"
+    },
+    {
+      "investment": 7,
+      "user":"stu",
+      "email":"stu@gmail.com"
+
+    },
+    {
+      "investment": 8,
+      "user":"vwx" ,
+      "email":"vwx@gmail.com"
+
+    },
+    {
+      "investment": 9,
+      "user":"yza",
+      "email":"yza@gmail.com"
+
+    },
+    {
+      "investment": 10,
+      "user": "123abc",
+      "email":"123abc@gmail.com"
+
+    },
+    {
+      "investment": 11,
+      "user": "456def",
+      "email":"456def@gmail.com"
+
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const userData = require('../../db.json')
 
 
 // GET METHOD
@@ -24,6 +24,7 @@ router.post('/', (req, res, next)=>{
       createdProduct: product
     });
 });
+
 
 router.post('/products', (req, res, next)=>{
 
