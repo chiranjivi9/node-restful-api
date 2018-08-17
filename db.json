@@ -8,113 +8,200 @@
       "id": 1,
       "user": "abc",
       "email": "abc@gmail.com",
-      "investments":{
+      "investments":[{
                 "investment": 1,
                 "user": "abc",
-                "email": "abc@gmail.com"
-              }
+                "email": "abc@gmail.com",
+                "companyName" : "toyota"
+              },
+            {
+              "investment": 2,
+              "user": "abc",
+              "email": "abc@gmail.com",
+              "companyName" : "Mazda"
+
+              }]
     },
     {
       "id": 2,
       "user": "def",
       "email":"def@gmail.com",
-      "investments":{
-                  "investment": 2,
+      "investments":[{
+                  "investment": 1,
                   "user":  "def",
-                  "email":"def@gmail.com"
-                }
+                  "email":"def@gmail.com",
+                  "companyName" : "Toyota"
+                },
+              {
+                "investment": 2,
+                "user": "def",
+                "email": "def@gmail.com",
+                "companyName" : "Mazda"
+                }]
     },
     {
       "id": 3,
       "user": "ghi",
       "email":"ghi@gmail.com",
-      "investments":{
-                  "investment": 3,
+      "investments":[{
+                  "investment": 1,
                   "user":  "ghi",
-                  "email":"ghi@gmail.com"
-                }
+                  "email":"ghi@gmail.com",
+                  "companyName": "Mazda"
+                },
+              {
+                "investment": 2,
+                "user": "ghi",
+                "email": "ghi@gmail.com",
+                "companyName" : "Toyota"
+
+                }]
     },
     {
       "id": 4,
       "user": "jkl",
       "email":"jkl@gmail.com",
-      "investments":{
-                "investment": 4,
+      "investments":[{
+                "investment": 1,
                 "user":   "jkl",
-                "email":"jkl@gmail.com"
-              }
+                "email":"jkl@gmail.com",
+                "companyName" : "Mazda"
+
+              },
+            {
+              "investment": 2,
+              "user": "jkl",
+              "email": "jkl@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     },
     {
       "id": 5,
       "user": "mno",
       "email":"mno@gmail.com",
-      "investments":{
-                "investment": 5,
+      "investments":[{
+                "investment": 1,
                 "user": "mno",
-                "email":"mno@gmail.com"
-              }
+                "email":"mno@gmail.com",
+                "companyName":"Mazda"
+              },
+            {
+              "investment": 2,
+              "user": "mno",
+              "email": "mno@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     },
     {
       "id": 6,
       "user": "pqr",
       "email":"pqr@gmail.com",
-      "investments":{
-                "investment": 6,
+      "investments":[{
+                "investment": 1,
                 "user": "pqr",
-                "email":"pqr@gmail.com"
-              }
+                "email":"pqr@gmail.com",
+                "companyName":"Mazda"
+              },
+            {
+              "investment": 2,
+              "user": "pqr",
+              "email": "pqr@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     },
     {
       "id": 7,
       "user": "stu",
       "email":"stu@gmail.com",
-      "investments":{
-                "investment": 7,
+      "investments":[{
+                "investment": 1,
                 "user":"stu",
-                "email":"stu@gmail.com"
-              }
+                "email":"stu@gmail.com",
+                "companyName":"Mazda"
+              },
+            {
+              "investment": 2,
+              "user": "stu",
+              "email": "stu@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     },
     {
       "id": 8,
       "user": "vwx",
       "email":"vwx@gmail.com",
-      "investments":{
-                "investment": 8,
+      "investments":[{
+                "investment": 1,
                 "user":"vwx" ,
-                "email":"vwx@gmail.com"
-              }
+                "email":"vwx@gmail.com",
+                "companyName":"Mazda"
+              },
+            {
+              "investment": 2,
+              "user": "vwx",
+              "email": "vwx@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     },
     {
       "id": 9,
       "user": "yza",
       "email":"yza@gmail.com",
-      "investments":{
-                  "investment": 9,
+      "investments":[{
+                  "investment": 1,
                   "user":"yza",
-                  "email":"yza@gmail.com"
+                  "email":"yza@gmail.com",
+                  "companyName" : "Mazda"
 
-                }
+                },
+              {
+                "investment": 2,
+                "user": "yza",
+                "email": "yza@gmail.com",
+                "companyName" : "Toyota"
+
+                }]
     },
     {
       "id": 10,
       "user": "123abc",
       "email":"123abc@gmail.com",
-      "investments":{
-                "investment": 10,
+      "investments":[{
+                "investment": 1,
                 "user": "123abc",
-                "email":"123abc@gmail.com"
-              }
+                "email":"123abc@gmail.com",
+                "companyName" : "Mazda"
+              },
+            {
+              "investment": 2,
+              "user": "123abc",
+              "email": "123abc@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
       },
     {
       "id": 11,
       "user": "456def",
       "email":"456def@gmail.com",
-      "investments":{
+      "investments":[{
                 "investment": 11,
                 "user": "456def",
                 "email":"456def@gmail.com"
 
-              }
+              },
+            {
+              "investment": 2,
+              "user": "abc",
+              "email": "abc@gmail.com",
+              "companyName" : "Toyota"
+
+              }]
     }
 
   ],
