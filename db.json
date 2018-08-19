@@ -10,14 +10,12 @@
       "email": "abc@gmail.com",
       "investments":[{
                 "investment": 1,
-                "user": "abc",
-                "email": "abc@gmail.com",
+                "amountInvested" : "$3000" ,
                 "companyName" : "toyota"
               },
             {
-              "investment": 2,
-              "user": "abc",
-              "email": "abc@gmail.com",
+              "investment": 1,
+              "amountInvested" : 3000 ,
               "companyName" : "Mazda"
 
               }]

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const userData = require('../../db.json')
-
+const userData = require('../../db.json');
+const User = require ('../models/userModel');
+const mongoose = require('mongoose');
 
 // GET METHOD
 router.get('/', (req, res, next)=>{
@@ -88,49 +89,63 @@ router.get('/investment/:investid/user/:id',(req, res, next)=>{
 
 
 // POST METHOD
+// svaing to the database
 router.post('/', (req, res, next)=>{
-  const product = {
-      name: req.body.name,
-      price: req.body.price
-  };
-
+  const user = new User({
+    _id : new mongoose.Types.ObjectId(),
+    user : req.body.user,
+    email : req.body.email,
+    investments :[{
+          amountInvested : req.body.amountInvested,
+          companyName : req.body.companyName
+    }]
+  });
+  user.save().then(result=>{
+      console.log(result);
+  })
+  .catch(err => console.log(err));
     res.status(200).json({
       message: 'Handling POST requests to /products',
-      createdProduct: product
+      createdProduct: user
     });
 });
 
-
-router.post('/products', (req, res, next)=>{
-
-    res.status(201).json({
-      message: 'Displaying products'
+// get the posted data with id
+router.get('/:userid', (req, res, next)=>{
+    const id = req.params.userid;
+    User.findById(id)
+    .exec()
+    .then(doc=>{
+        console.log("Frome database", doc);
+        res.status(200).json(doc);
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({error:err});
     });
 });
 
-router.get('/:productId', (req, res, next)=>{
-
-  const id = req.params.productId;
-
-  if(id === 'special'){
-
-    res.status(200).json({
-
-      message:"this message belongs to this id",
-      id: id
-
-    });
-  } else {
-
-      res.status(200).json({
-
-          message : 'you passed an id'
-      });
-  }
-});
-
-
-
+// get data with id mentioned else return a message
+// router.get('/:productId', (req, res, next)=>{
+//
+//   const id = req.params.productId;
+//
+//   if(id === 'special'){
+//
+//     res.status(200).json({
+//
+//       message:"this message belongs to this id",
+//       id: id
+//
+//     });
+//   } else {
+//
+//       res.status(200).json({
+//
+//           message : 'you passed an id'
+//       });
+//   }
+// });
 
 
 router.patch('/:productId', (req,res, next)=>{
@@ -141,7 +156,6 @@ router.patch('/:productId', (req,res, next)=>{
     });
 
 });
-
 
 
 router.delete('/:productId',(req, res, next)=>{
