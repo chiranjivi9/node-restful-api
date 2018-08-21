@@ -51,7 +51,6 @@ router.get('/allinvestments',(req, res, next)=>{
        message : "Not Found."
      })
    }
-
  })
   .catch(err=>{
     console.log(err);

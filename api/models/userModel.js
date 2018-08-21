@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
       user : String,
       email : String,
-      _id : mongoose.Schema.Types.ObjectId,
+      // _user_id : mongoose.Schema.Types.ObjectId,
       investments : [
         {
-            amountInvested : String,
-            companyName : String
+            // _user_id : mongoose.Schema.Types.ObjectId,
+            // userName : {type:String, required: true},
+            // userID :  String,
+            tradeID :  String,
+            isPersonal : Boolean,
+            paymentMethod :  String,
+            amount : Number,
+            fee : Number
           }
         ]
 });
