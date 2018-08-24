@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../../data.json')
 const Investment = require('../models/userInvestmentModel')
 const mongoose = require('mongoose');
+const userModel = require('../models/userModel');
 
 // GET Method
 router.get('/test', (req,res,next)=>{
@@ -12,19 +13,20 @@ router.get('/test', (req,res,next)=>{
 });
 // create a new investment
 router.post('/',(req, res, next)=>{
-  const investment = new Investment({
-    // _investmnetID : new mongoose.Types.ObjectId(),
-    userName : req.body.userName,
-    UserID :  req.body.userid,
+  const investment = new Investment  ({
+    _investmnetID : new mongoose.Types.ObjectId(),
+    // userName : req.body.userName,
+    _userid : req.body.userid,
     tradeID : req.body.tradeid,
-    isPersonal : req.body.isPersonal,
+    isPersonal : req.body.isPersonal ,
     paymentMethod : req.body.paymentMethod,
     amount : req.body.amount,
+    campaign_id : req.body.campaign_id,
     fee : req.body.fee
   });
 investment.save().then(result=>{
   console.log(result);
-  res.status(200).json({
+  res.status(201).json({
     investment : result
   });
 })
@@ -37,9 +39,35 @@ investment.save().then(result=>{
 });
 
 // get all the investmnets from the db
+// router.get('/detailinvestments',(req, res, next)=>{
+//   Investment
+//   .find()
+//   .populate('_userid')
+//   .exec()
+//   .then(docs=>{
+//     console.log(docs);
+//     if(docs.length >= 0){
+//       res.status(200).json(docs);
+//    }
+//     else{
+//     res.status(404).json({
+//        message : "Not Found."
+//      })
+//    }
+//  })
+//   .catch(err=>{
+//     console.log(err);
+//     res.status(500).json({
+//       error: err
+//     });
+//   })
+// });
+
+
 router.get('/allinvestments',(req, res, next)=>{
   Investment
   .find()
+  // .populate('_userid')
   .exec()
   .then(docs=>{
     console.log(docs);
@@ -64,6 +92,7 @@ router.get('/allinvestments',(req, res, next)=>{
 router.get('/:investid',(req,res,next)=>{
 const investmentID = req.params.investid;
 Investment.findById(investmentID)
+.populate('_userid')
 .exec()
 .then(doc=>{
   console.log("From databse", investmentID);

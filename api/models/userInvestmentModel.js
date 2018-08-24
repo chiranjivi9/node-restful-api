@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 
 const userInvestSchema = mongoose.Schema({
-      // _investmnetID : mongoose.Schema.Types.ObjectId,
-      userName : {type:String, required: true},
+      _investmnetID : mongoose.Schema.Types.ObjectId,
+      // _userid : {type: mongoose.Schema.Types.ObjectId, ref: 'User', required : true},
+      userName : String,
       userID :  String,
-      tradeID :  {type:String, required: true},
-      isPersonal :  {type:Boolean, required: true},
-      paymentMethod :  {type:String, required: true},
-      amount :  {type:Number, required: true},
-      fee : {type:Number, required: true}
+      tradeID :  String,
+      isPersonal :  String,
+      paymentMethod :  String,
+      amount :  Number,
+      campaign_id : String,
+      fee : Number
 });
 
-module.exports = mongoose.model('Investment', userInvestSchema);
+module.exports = mongoose.model('UserInvestment', userInvestSchema);

@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
-const userSchema = mongoose.Schema({
-      user : String,
-      email : String,
-      // _user_id : mongoose.Schema.Types.ObjectId,
-      investments : [
-        {
-            // _user_id : mongoose.Schema.Types.ObjectId,
-            // userName : {type:String, required: true},
-            // userID :  String,
-            tradeID :  String,
-            isPersonal : Boolean,
-            paymentMethod :  String,
-            amount : Number,
-            fee : Number
-          }
-        ]
-});
+const userSchema = new Schema({
 
-module.exports = mongoose.model('User', userSchema);
-
-
-// User is a constructor here
+  fname : String,
+  lname : String,
+  email : String,
+  password : String,
+  _userid : mongoose.Schema.Types.ObjectId,
+  investments : [{
+      tradeID :  String,
+      // isPersonal : {type: Boolean, required: true},
+      _investmnetID : mongoose.Schema.Types.ObjectId,
+      paymentMethod :  String,
+      amount : Number,
+      fee : Number,
+      campaign_id : String,
+      invest_date : {type : Date, default: Date.now}
+  }]
+})
+const User = mongoose.model('User', userSchema);
+module.exports =  User
+// module.exports = mongoose.model('Investment', investmentSchema)
