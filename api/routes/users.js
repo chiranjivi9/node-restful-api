@@ -46,6 +46,7 @@ router.get('/user/:userid', (req, res, next) => {
   });
 });
 
+
 // get all the investments data for the user
 router.get('/user/:userid/investments',(req, res, next)=>{
   const uid = req.params.userid;
@@ -62,9 +63,10 @@ router.get('/user/:userid/investments',(req, res, next)=>{
   })
 });
 //
-// TODO: get one investment of a user
-// router.get('/user/:userid/investment/:investmentId',(req, res) => {});
 
+
+// TODO: get one investment of a user  // done!
+// router.get('/user/:userid/investment/:investmentId',(req, res) => {});
 router.get('/user/:userid/investment/:investid',(req, res, next)=>{
   const uid = req.params.userid;
   // const iid = User.investments;
@@ -78,7 +80,6 @@ router.get('/user/:userid/investment/:investid',(req, res, next)=>{
   res.status(500).json({error:err});
 })
 });
-
 
 
 // [POST]
@@ -130,6 +131,7 @@ router.post('/user/:userid/add',(req, res, next) => {
   })
 });
 
+
 // [PUT]
 // Update user
 router.put('/user/:userid', (req,res)=>{
@@ -140,79 +142,26 @@ router.put('/user/:userid', (req,res)=>{
   })
 });
 
-// TODO: update an investment
+
+// TODO: update an investment // done!
 // router.put('/user/:userid/investment/:investmentid', (req, res) => {})
-
-router.put('/user/:userid/investment/:investid/',(req, res, next)=>{
-const iid = req.params.investid;
-const id = req.params.userid;
-
-// User.find( { _id: req.params.userid}, { investments: { $elemMatch: { _id: req.params.investid} } })
-User.update({'investments._id': iid}, {'$set': {
-    'investments.$.tradeID': req.body,
-    'investments.$.paymentMethod' : req.body,
-    'investments.$.amount' : req.body,
-    'investments.$.fee' : req.body,
-    'investments.$.campaign_id' : req.body
-
-}}, function(err) {
-  if(err){
-          console.log(err);
-          return res.send(err);
+router.post('/user/:userid/investment/:investid',(req, res, next)=>{
+  const id = req.params.userid;
+  const iid = req.params.investid;
+  User.update({'investments._id': iid},{'$set':{
+    'investments.$.tradeID':req.body.tradeid,
+    'investments.$.paymentMethod' : req.body.paymentmethod,
+    'investments.$.campaign_id' : req.body.campaign_id,
+    'investments.$.amount' : req.body.amount,
+    'investments.$.fee' : req.body.fee
+  }},(err)=>{
+        if (err) {
+          return next(err)
         }
-        return res.json(model);
- });
-
-
-// User.update({'investments._id': req.params.investid},
-//      {'$set': {
-//             // 'investments.$.post': "this is Update comment",
-//             'investments.$.tradeID' : req.body,
-//             // 'investments.$.paymentMethod' : req.body,
-//             // 'investments.$.amount' : req.body,
-//             // 'investments.$.fee' : req.body,
-//             // 'investments.$.campaign_id' : req.body
-//     }},
-//          function(err,model) {
-//      if(err){
-//          console.log(err);
-//          return res.send(err);
-//        }
-//        return res.json(model);
-// });
+        res.status(200).send("Investment Updated!")
+      });
 });
 
-//
-// Person.update({'items.id': 2}, {'$set': {
-//     'items.$.name': 'updated item2',
-//     'items.$.value': 'two updated'
-// }}, function(err) { ..
-
-
-
-  //
-  // investments : [{
-  //     tradeID :  String,
-  //     // isPersonal : {type: Boolean, required: true},
-  //     _investmnetID : mongoose.Schema.Types.ObjectId,
-  //     paymentMethod :  String,
-  //     amount : Number,
-  //     fee : Number,
-  //     campaign_id : String,
-  //     invest_date : {type : Date, default: Date.now}
-  // }]
-// db.collection.update({"_id": args._id, "viewData._id": widgetId}, {$set: {"viewData.$.widgetData": widgetDoc.widgetData}})
-
-
-
-
-//
-//                                             FFFFFFFF RRRRRRR   IIIIIII YY     YY    AA     YY      YY  !!
-//                                             FF       RR    RR    II    YY   YY    AA AA     YY   YY    !!
-//                                             FF       RR    RR    II     YY YY    AA   AA     YY YY     !!
-//                                             FFFFFF   RR RR       II       YY    AAAAAAAAA      YY      !!
-//                                             FF       RR   RR     II      YY    AA      AA     YY
-//                                             FF       RR     RR IIIIIII YYY    AA        AA  YYY        !!
 
 // update a user
 router.patch('/user/:userid', (req,res) => {
@@ -244,87 +193,20 @@ router.delete('/user/:userid',(req, res) => {
   })
 });
 
-// TODO: delete an investment
-// router.delete('/user/:userid/investment/:investmentid', (req, res) => {})
+// TODO: delete an investment // done!
+// router.delete('/user/:userid/investment/:investmentid', (req, res) => {
+router.delete('/user/:userid/investment/:investid',(req, res, next)=>{
+  const id = req.params.userid;
+  const iid = req.params.investid;
+  User.update(
+      {'_id': id},
+      { $pull: { "investments" : { '_id': iid } } },
+      (err)=>{
+            if (err) {
+              return next(err)
+            }
+            res.status(200).send("Investment Deleted Successfully!")
+          });
+});
 
 module.exports = router;
-
-
-//        SIMPLY WORK ON DATA FROM db.json
-//
-//
-// router.get('/', (req, res, next)=>{
-//   res.status(200).json({
-//     message: 'Handling GET requests to /products',
-//     message2: "You have accessed the Users data"
-//   });
-// });
-//
-// // fetch all Users with this route
-// router.get('/users', (req, res, next)=>{
-//   const users = userData.users
-//   res.status(200).json(users)
-// });
-//
-// // fetch user data with specific id
-// router.get('/user/:id', (req, res, next)=>{
-//   if(req.params.id < userData.users.length){
-//     const user = userData.users[req.params.id]
-//     res.status(200).json(user)
-//   }
-//   else{
-//         res.status(404).json({
-//             success: false,
-//             message : "User Not Found"
-//         })
-//   }
-// });
-//
-// // fetch investments for specific user with ref to the id
-// router.get('/user/:id/investment/:investid',(req, res, next)=>{
-//   if(req.params.investid<userData.investments.length && req.params.id < userData.users.length){
-//     const investment = userData.users[req.params.id].investments[req.params.investid]
-//     res.status(200).json({investment})
-//   }
-//   else {
-//     res.status(404).json({
-//         message: "Entry not found"
-//     });
-//   }
-// });
-//
-// // fetch all the investments
-// router.get('/investments',(req, res, next)=>{
-//   const userInvestments = userData.investments
-//   res.status(200).json({userInvestments})
-// });
-//
-// // fetch investment by id
-// router.get('/investment/:id', (req,res,next)=>{
-//
-//   if(req.params.id<userData.investments.length){
-//
-//     const investment = userData.investments[req.params.id]
-//     res.status(200).json({ investment });
-//   }
-//   else{
-//     res.status(404).json({
-//       success : false,
-//       message: "Not Found"
-//     });
-//   }
-// });
-//
-// // fetch users for specific investment with ref to the id
-// router.get('/investment/:investid/user/:id',(req, res, next)=>{
-//
-//   if(req.params.investid<userData.investments.length && req.params.id < userData.users.length){
-//     const user = userData.users[req.params.id].investments[req.params.investid]
-//     res.status(200).json(user)
-//   }
-//   else {
-//     res.status(404).json({
-//         message: "Entry not found"
-//     });
-//   }
-// });
