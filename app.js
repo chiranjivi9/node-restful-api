@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 // create a path to the products folder in api
 const usersRoute = require('./api/routes/users');
-const investmentRoute = require('./api/routes/investments');
+const investmentRoute = require('./api/routes/userInvestments');
+const commentRoute = require('./api/routes/userComments');
 const userData = require('./db.json')
 
 // coonnect to the database
@@ -31,6 +32,7 @@ if (req.method === 'OPTIONS'){
 // routes which should handle requests
 app.use('/userdata', usersRoute);
 app.use('/investmentdata', investmentRoute);
+app.use('/commentdata', commentRoute);
 
 app.use((req,res,next)=>{
 

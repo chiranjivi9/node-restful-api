@@ -9,13 +9,13 @@ const userSchema = new Schema({
   password : String,
   _userid : mongoose.Schema.Types.ObjectId,
   investments : [{
-      tradeID :  String,
-      // isPersonal : {type: Boolean, required: true},
-      _investmnetID : mongoose.Schema.Types.ObjectId,
-      paymentMethod :  String,
-      amount : Number,
-      fee : Number,
       campaign_id : String,
+      tradeID :  String,
+      isPersonal : {type: Boolean, required: true},
+      amount : Number,
+      paymentMethod :  String,
+      fee : Number,
+      _investmnetID : mongoose.Schema.Types.ObjectId,
       invest_date : {type : Date, default: Date.now}
   }]
 })

@@ -113,10 +113,9 @@ router.post('/user/:userid/add',(req, res, next) => {
   User.findById(req.params.userid, (err, user) => {
     if (err) console.log(err)
     const new_investment = new Investment({
-
       tradeID: req.body.tradeid,
       _investmnetID : new mongoose.Types.ObjectId(),
-      // isPersonal: req.body.ispersonal,
+      isPersonal: req.body.isPersonal,
       paymentMethod: req.body.paymentmethod,
       amount: req.body.amount,
       campaign_id: req.body.campaign_id,
@@ -145,7 +144,7 @@ router.put('/user/:userid', (req,res)=>{
 
 // TODO: update an investment // done!
 // router.put('/user/:userid/investment/:investmentid', (req, res) => {})
-router.post('/user/:userid/investment/:investid',(req, res, next)=>{
+router.put('/user/:userid/investment/:investid',(req, res, next)=>{
   const id = req.params.userid;
   const iid = req.params.investid;
   User.update({'investments._id': iid},{'$set':{
