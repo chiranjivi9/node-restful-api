@@ -187,8 +187,12 @@ router.patch('/user/:userid', (req,res) => {
 
 router.delete('/user/:userid',(req, res) => {
   User.remove({_id: req.params.userid}, (err) => {
-    if (err) res.status(500).send("User does not exist.")
-    res.status(200).send("User deleted successfully.")
+    if(err){
+      res.status(500).send("User does not exist.")
+    }
+    else{
+      res.status(200).send("User deleted successfully.")
+  }
   })
 });
 

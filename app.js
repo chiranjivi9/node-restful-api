@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const usersRoute = require('./api/routes/users');
 const investmentRoute = require('./api/routes/userInvestments');
 const commentRoute = require('./api/routes/userComments');
+const campaignRoute = require('./api/routes/userCampaigns');
 const userData = require('./db.json')
 
 // coonnect to the database
@@ -33,6 +34,7 @@ if (req.method === 'OPTIONS'){
 app.use('/userdata', usersRoute);
 app.use('/investmentdata', investmentRoute);
 app.use('/commentdata', commentRoute);
+app.use('/campaigndata', campaignRoute);
 
 app.use((req,res,next)=>{
 

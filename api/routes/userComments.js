@@ -29,8 +29,12 @@ router.get('/comments', (req, res, next)=>{
 router.get('/comment/:commentid', (req, res, next)=>{
   const id = req.params.commentid;
   userComment.findById(id, (err, user)=>{
-    if(err) return next(err)
-    res.json(user)
+    if(err) return next({
+      message : "Comment id does not exist.",
+      error: err})
+    res.json({
+      message: "The comment.",
+      Details: user})
   })
 })
 
@@ -39,7 +43,7 @@ router.get('/comment/:commentid', (req, res, next)=>{
 // [POST]
 // create a comment
 router.post('/comments', (req, res, next)=>{
-  const comment = new Comment({
+  const comment = new userComment({
     comments : req.body.comments,
     // _id : mongoose.Types.ObjectId(),
     fname : req.body.fname,
@@ -67,7 +71,7 @@ router.post('/comments', (req, res, next)=>{
 // delete a comment with id
 router.delete('/comment/:commentid',(req, res, next)=>{
   userComment.remove({_id: req.params.commentid}, (err) => {
-    if (err) res.status(500).send("Comment does not exist.")
+    if (err) res.status(500).send("Comment id does not exist.")
     res.status(200).send("Comment deleted successfully.")
   })
 })
