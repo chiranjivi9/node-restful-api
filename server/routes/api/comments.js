@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userComment = require('../models/userCommentModel');
+const userComment = require('../../models/UserCommentModel');
 const mongoose = require('mongoose');
 
 
 // [GET]
-// all comments
+all comments
 router.get('/comments', (req, res, next)=>{
   userComment.find()
   .then(result=>{
