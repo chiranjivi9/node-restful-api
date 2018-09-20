@@ -1,25 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi')
-// const userData = require('../../db.json');
 const User = require('../../models/User');
 const Investment = require('../../models/Investment')
 const mongoose = require('mongoose');
 
 // [GET]
-// fetch all users from the database
+// get all users
 router.get('/',(req, res, next)=>{
   User.find()
-  // .exec()
   .then(docs => {
     console.log(docs);
     if (docs.length >= 0) {
       res.status(200).json({
-        message : "All Users.",
-        Details : docs
-
+        message: "All Users",
+        Details: docs
       });
-    } else {
+    }
+    else {
       res.status(404).send("There are no users in the database currently.")
     }
   })
@@ -29,8 +27,7 @@ router.get('/',(req, res, next)=>{
   })
 });
 
-
-// get the posted data with id
+//get user under a specific id
 router.get('/:userid', (req, res, next) => {
   const id = req.params.userid;
   User.findById(id)
@@ -39,128 +36,108 @@ router.get('/:userid', (req, res, next) => {
     console.log("From database", docs);
     if(docs){
       res.status(200).json({
-          message : "User.",
-          Details : docs
-
+        message: "User Accessed!",
+        Details: docs
       });
     }
     else{
-      res.status(404).json({ message : "No valid entry for the entered ID" });
+      res.status(404).json({ message: "No valid entry for the entered ID" });
     }
   })
   .catch(err => {
     console.log(err);
-    res.status(404).send(err);
+    res.status(404).send({
+      message: "No valid entry for the entered ID"
+    });
   });
 });
 
-
 // [POST]
-// create a user
-  router.post('/',(req, res) => {
-    const { error } = validateUser(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
-    const user = new User({
-      fName: req.body.fName,
-      lName: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-      investments : [
-        // {
-        // campaignId : req.body.campaignId,
-        // tradeId :  req.body.tradeId,
-        // isPersonal : req.body.isPersonal,
-        // amount : req.body.amount,
-        // paymentMethod :  req.body.paymentMethod,
-        // fee : req.body.fee
-        // }
-      ],
-      comments : [
-        // {
-        //   role : req.body.role,
-        //   comment : req.body.comment,
-        //   // campaignId : req.body.campaignId,
-        //   content : req.body.content
-        // }
-      ]
-    })
-    user.save(err => {
-      if (err) return res.send(err.message)
-      return res.status(200).send(user)
-    })
+router.post('/:userid',(req,res,next)=>{
+  res.status(404).send({
+    message: "User already exists."
   })
+})
 
-// [PUT]
-// Update user
-router.put('/:userid', (req,res)=>{
-  User.findById(req.params.userid, (err, user)=>{
-    if (err) return rest.status(404).send(err.message)
-      const{error} = (req.body)
-      if(error) return res.status(400).send(error.details[0].message)
-
-      user.fName =(req.body.fName)
-      user.lName = req.body.last_name
-      user.email = req.body.email
-      user.password = req.body.password
-
-      user.investments = []
-      user.investments = req.body.investmentData
-
-      user.comments = []
-      user.comments = req.body.commentData
-
-      console.log(user);
-    user.save(err=>{
-      if(err) return res.send(err.message)
-      res.status(200).send(user)
+// create a user
+router.post('/',(req, res) => {
+  const { error } = validateUser(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
+  const user = new User({
+    fName: req.body.fName,
+    lName: req.body.lName,
+    email: req.body.email,
+    password: req.body.password
+  })
+  user.save(err => {
+    if (err) return res.send(err.message)
+    return res.status(200).send({
+      message: "User created successfully!",
+      Details: user
     })
   })
 });
 
+// [PUT]
+// Update/Modify user
+router.put('/:userid', (req,res)=>{
+  User.findById(req.params.userid, (err, user)=>{
+    if (err) return rest.status(404).send({
+      message: "User not found"
+    })
+    const{error} = validateUser(req.body)
+    if(error) return res.status(400).send(error.details[0].message)
+      user.fName = req.body.fName
+      user.lName = req.body.lName
+      user.email = req.body.email
+      user.password = req.body.password
+      user.investments = []
+      user.investments = req.body.investments
+      user.comments = []
+      user.comments = req.body.comments
+    console.log(user);
+    user.save(err=>{
+    if(err) return res.send({
+      message: "User not found"
+    })
+      res.status(200).send({
+        message: "User updated successfully!",
+        details: user
+      })
+    })
+  })
+  User.populate('comments', 'investments')
+  // User.exec()
+});
 
 // [DELETE]
+router.delete('/',(req, res,next)=>{
+  res.status(404).json({
+    message: "Please enter an ID."
+  })
+})
+
 // Delete user with user id
 router.delete('/:userid',(req, res) => {
   User.remove({_id: req.params.userid}, (err) => {
     if(err){
-      res.status(404).send("User does not exist.")
+      res.status(404).send("User not found.")
     }
     else{
       res.status(200).send("User deleted successfully.")
-  }
+    }
   })
 });
 
-// delete a specific investment with user id 
-router.delete('/user/:userid/investment/:investmentid', (req, res) => {
-router.delete('/user/:userid/investment/:investid',(req, res, next)=>{
-  const id = req.params.userid;
-  const iid = req.params.investid;
-  User.update(
-      {'_id': id},
-      { $pull: { "investments" : { '_id': iid } } },
-      (err)=>{
-            if (err) {
-              return next(err)
-            }
-            res.status(200).send("Investment Deleted Successfully!")
-          });
-});
-
-
-
-function validateUser (data) {
+// fn - Validate User input
+function validateUser(data) {
   const schema = {
     fName: Joi.string().trim().min(2).regex(/^[a-zA-Z ]*$/).required(),
     lName: Joi.string().trim().min(2).regex(/^[a-zA-Z ]*$/).required(),
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-    password: Joi.string().regex(/^[a-zA-Z0-9@#&]{6,30}$/).required()
-    // campaignId : Joi.number(),
-    // tradeId :  Joi.number(),
-    // isPersonal : Joi.boolean(),
-    // amount :  Joi.number(),
-    // paymentMethod :  Joi.string().trim().min(3).regex(/^[a-zA-Z]*$/),
-    // fee : Joi.number()
+    password: Joi.string().regex(/^[a-zA-Z0-9@#&]{6,30}$/).required(),
+    investments: Joi.array().items(),
+    comments: Joi.array().items(),
   }
   return Joi.validate(data, schema)
 }

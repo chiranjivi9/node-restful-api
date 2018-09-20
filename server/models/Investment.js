@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-const userInvestSchema = mongoose.Schema({
-      // _userid : {type: mongoose.Schema.Types.ObjectId, ref: 'User', required : true},
-
-      fName : String,
-      lName : String,
-      campaignId : String,
-      tradeId :  Number,
-      isPersonal : Boolean,
-      amount :  Number,
-      paymentMethod :  String,
-      fee : Number,
-      investDate : {type : Date, default: Date.now}
+const Schema = mongoose.Schema
+const userInvestSchema = new Schema({
+  campaignId: String,
+  tradeId: String,
+  isPersonal: Boolean,
+  amount: Number,
+  paymentMethod: String,
+  fee: Number,
+  investDate: {type: Date, default: Date.now},
+  userId: {type: Schema.ObjectId, ref:'User', required: true},
+  campaignId: {type: Schema.ObjectId, ref:'userCampaign', required: true}
 });
-const Investment = mongoose.model('UserInvestment', userInvestSchema);
+
+const Investment = mongoose.model('userInvestment', userInvestSchema);
 module.exports = Investment

@@ -1,22 +1,39 @@
 {
-  "name": "rest-api",
+  "name": "server",
   "version": "1.0.0",
-  "description": "A node.js RESTful-API prac project",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "jest",
+    "prod": "node server/src/server.js",
+    "dev": "nodemon server/src/server.js"
   },
-  "author": "Chiranjivi Jawale",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "mongodb": "^3.1.3",
-    "mongoose": "^5.2.8",
-    "morgan": "^1.9.0"
+    "express-jwt": "^5.3.1",
+    "joi": "^13.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9",
+    "plaid": "^2.6.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.1.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.0",
+    "superagent": "^3.8.3",
+    "supertest": "^3.1.0"
   }
 }

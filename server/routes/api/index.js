@@ -3,7 +3,7 @@ const users = require('./users')
 const example = require('./example')
 
 routes.get('/', (req, res) => {
-  
+
   return res.status(200).send('Welcome to Wunderfund\'s REST API v1!')
 })
 

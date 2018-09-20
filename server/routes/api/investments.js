@@ -1,152 +1,145 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi')
-// const data = require('../../data.json')
+const User = require('../../models/User');
 const Investment = require('../../models/Investment')
 const mongoose = require('mongoose');
-const userModel = require('../../models/User');
-
 
 // [GET]
-// Get all investments
+// get all users
 router.get('/',(req, res, next)=>{
-  Investment
-  .find()
-  // .populate('_userid')
-  .exec()
-  .then(docs=>{
+  User.find()
+  .then(docs => {
     console.log(docs);
-    if(docs.length >= 0){
+    if (docs.length >= 0) {
       res.status(200).json({
-        message : "All Investments.",
-        Details : docs
+        message: "All Users",
+        Details: docs
       });
-   }
-    else{
-    res.status(404).json({
-       message : "There are no investments in the database currently."
-     })
-   }
- })
-  .catch(err=>{
+    }
+    else {
+      res.status(404).send("There are no users in the database currently.")
+    }
+  })
+  .catch(err => {
     console.log(err);
-    res.status(500).json({
-      error: err
-    });
+    res.json(404).send(err);
   })
 });
 
-
-// get investment for a specific ID
-router.get('/:investid',(req,res,next)=>{
-const investmentID = req.params.investid;
-Investment.findById(investmentID)
-.populate('_userid')
-.exec()
-.then(docs=>{
-  console.log("From databse", investmentID);
+//get user under a specific id
+router.get('/:userid', (req, res, next) => {
+  const id = req.params.userid;
+  User.findById(id)
+  .exec()
+  .then(docs => {
+    console.log("From database", docs);
     if(docs){
-    res.status(200).json({
-      message : "Investment.",
-      Details : docs});
+      res.status(200).json({
+        message: "User Accessed!",
+        Details: docs
+      });
     }
     else{
-    res.status(404).json({message: "Invalid Entry for the ID entered"})
+      res.status(404).json({ message: "No valid entry for the entered ID" });
     }
   })
-.catch(err=>{
-  console.log(err);
-  res.status(500).json({
-    error: err
-   });
- })
-
+  .catch(err => {
+    console.log(err);
+    res.status(404).send({
+      message: "No valid entry for the entered ID"
+    });
+  });
 });
-
 
 // [POST]
+router.post('/:userid',(req,res,next)=>{
+  res.status(404).send({
+    message: "User already exists."
+  })
+})
 
-// create an investment
-router.post('/', (req,res)=>{
-  const{error} = validateInvestment(req.body)
+// create a user
+router.post('/',(req, res) => {
+  const { error } = validateUser(req.body)
   if (error) return res.status(400).send(error.details[0].message)
-  const investment = new Investment({
-    fName : req.body.fName,
-    lName : req.body.lName,
-    tradeId : req.body.tradeId,
-    isPersonal : req.body.isPersonal ,
-    paymentMethod : req.body.paymentMethod,
-    amount : req.body.amount,
-    campaignId : req.body.campaignId,
-    fee : req.body.fee
+  const user = new User({
+    fName: req.body.fName,
+    lName: req.body.lName,
+    email: req.body.email,
+    password: req.body.password
   })
-  investment.save(err=>{
-    if(err) return res.send(err.message)
-    return res.status(200).send(investment)
-  })
-});
-
-
-// [PUT]
-
-// update an investment
-router.put('/:investid',(req, res)=>{
-  Investment.findById(req.params.investid, (err, investment)=>{
-    if(err) return res.status(404).send(err.message)
-    const {error} = validateInvestment(req.body)
-    if(error) return res.status(400).send(error.details[0].message)
-
-    investment.fName = req.body.fName,
-    investment.lName = req.body.lName,
-    investment.tradeId = req.body.tradeId,
-    investment.isPersonal = req.body.isPersonal ,
-    investment.paymentMethod = req.body.paymentMethod,
-    investment.amount = req.body.amount,
-    investment.campaignId = req.body.campaignId,
-    investment.fee = req.body.fee
-
-    investment.save(err=>{
-      if(err) return res.send(err.message)
-      res.status(200).send(investment)
+  user.save(err => {
+    if (err) return res.send(err.message)
+    return res.status(200).send({
+      message: "User created successfully!",
+      Details: user
     })
   })
 });
 
+// [PUT]
+// Update/Modify user
+router.put('/:userid', (req,res)=>{
+  User.findById(req.params.userid, (err, user)=>{
+    if (err) return rest.status(404).send({
+      message: "User not found"
+    })
+    const{error} = validateUser(req.body)
+    if(error) return res.status(400).send(error.details[0].message)
+      user.fName = req.body.fName
+      user.lName = req.body.lName
+      user.email = req.body.email
+      user.password = req.body.password
+      user.investments = []
+      user.investments = req.body.investments
+      user.comments = []
+      user.comments = req.body.comments
+    console.log(user);
+    user.save(err=>{
+    if(err) return res.send({
+      message: "User not found"
+    })
+      res.status(200).send({
+        message: "User updated successfully!",
+        details: user
+      })
+    })
+  })
+  User.populate('comments', 'investments')
+  // User.exec()
+});
 
 // [DELETE]
-//  Delete an investment
-router.delete('/:investid',(req, res, next)=>{
-  const id = req.params.investid;
-  Investment.remove({ _id: id })
-  .exec()
-  .then(result=>{
-    res.status(200).json({
-        message : "Investment entry deleted successfully."
-    });
+router.delete('/',(req, res,next)=>{
+  res.status(404).json({
+    message: "Please enter an ID."
   })
-  .catch(err =>{
-    res.status(404).json({
-      message : "ID entered not found."
-    });
+})
+
+// Delete user with user id
+router.delete('/:userid',(req, res) => {
+  User.remove({_id: req.params.userid}, (err) => {
+    if(err){
+      res.status(404).send("User not found.")
+    }
+    else{
+      res.status(200).send("User deleted successfully.")
+    }
   })
 });
 
-
-function validateInvestment(data) {
+// fn - Validate User input
+function validateUser(data) {
   const schema = {
-
-    fName : Joi.string().trim().min(2).regex(/^[a-zA-Z]*$/).required(),
-    lName : Joi.string().trim().min(2).regex(/^[a-zA-Z]*$/).required(),
-    campaignId : Joi.number().required(),
-    tradeId :  Joi.number().required(),
-    isPersonal : Joi.boolean().required(),
-    amount :  Joi.number().required(),
-    paymentMethod :  Joi.string().trim().min(3).regex(/^[a-zA-Z]*$/).required(),
-    fee : Joi.number().required()
+    fName: Joi.string().trim().min(2).regex(/^[a-zA-Z ]*$/).required(),
+    lName: Joi.string().trim().min(2).regex(/^[a-zA-Z ]*$/).required(),
+    email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+    password: Joi.string().regex(/^[a-zA-Z0-9@#&]{6,30}$/).required(),
+    investments: Joi.array().items(),
+    comments: Joi.array().items(),
   }
-
   return Joi.validate(data, schema)
 }
-
 
 module.exports = router;

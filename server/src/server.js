@@ -1,11 +1,7 @@
-// server settings
+const app = require('./app')
 
-const http = require('http');
+app.set('port', process.env.APP_PORT || 4000)
 
-const app = require('./app');
-
-const port = process.env.PORT || 3000;
-
-const server = http.createServer(app);
-
-server.listen(port);
+const server = app.listen(app.get('port'), () => {
+  console.log(`Server listening on port ${server.address().port}`)
+})
